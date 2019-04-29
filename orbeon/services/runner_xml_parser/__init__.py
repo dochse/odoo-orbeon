@@ -18,5 +18,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from runner_xml_parser import RunnerXmlParser
-from xml_parser_erp_fields import XmlParserERPFields
+from .import runner_xml_parser
+from . import xml_parser_erp_fields

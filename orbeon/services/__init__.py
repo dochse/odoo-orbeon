@@ -18,5 +18,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import persistence_server
-import runner_xml_parser
+from . import persistence_server
+from . import runner_xml_parser
