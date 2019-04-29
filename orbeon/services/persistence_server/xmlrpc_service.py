@@ -1,4 +1,4 @@
-import xmlrpclib
+import xmlrpc.client
 
 class XMLRPCService(object):
 
@@ -9,8 +9,8 @@ class XMLRPCService(object):
         self.connect()
         
     def connect(self):
-        self.common = xmlrpclib.ServerProxy("%s/xmlrpc/2/common" % self.url)
-        self.api = xmlrpclib.ServerProxy("%s/xmlrpc/2/object" % self.url)
+        self.common = xmlrpc.client.ServerProxy("%s/xmlrpc/2/common" % self.url)
+        self.api = xmlrpc.client.ServerProxy("%s/xmlrpc/2/object" % self.url)
         self.uid = self.common.authenticate(self.db, self.uid, self.pwd, {})
 
     def search(self, model, domain):

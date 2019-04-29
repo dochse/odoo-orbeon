@@ -22,7 +22,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
 import threading
-import urllib2
+import urllib.request
 import logging
 
 from lxml import etree
@@ -165,7 +165,7 @@ class OrbeonServer(models.Model):
             self.create_orbeon_builder_templates()
 
             return True
-        except Exception, e:
+        except Exception as e:
             _logger.error('Exception: %s' % e)
 
     @api.multi
@@ -241,7 +241,7 @@ class OrbeonServer(models.Model):
                     )
                     cr.execute("UPDATE orbeon_server SET persistence_server_uuid = %s WHERE id = %s", (str(new_uuid), id))
 
-        except Exception, e:
+        except Exception as e:
             _logger.error("Exception: %s" % e)
 
     def _start_persistence_server(self, uuid, port, processtype, configfile_path=None):
@@ -284,8 +284,8 @@ class OrbeonServer(models.Model):
         for form_name in form_names:
             try:
                 url = "%s/fr/service/persistence/crud/orbeon/%s/form/form.xhtml" % (self.url, form_name)
-                request = urllib2.Request(url)
-                result = urllib2.urlopen(request)
+                request = urllib.Request(url)
+                result = urllib.urlopen(request)
                 data = result.read()
 
                 parser = etree.XMLParser(recover=True, encoding='utf-8')
@@ -310,7 +310,7 @@ class OrbeonServer(models.Model):
                 })
 
                 self.builder_templates_created = True
-            except Exception, e:
+            except Exception as e:
                 _logger.error(
                     "%s - Orbeon request: %s" % (e, url)
                 )

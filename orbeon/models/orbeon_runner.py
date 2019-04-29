@@ -213,7 +213,7 @@ class OrbeonRunner(models.Model):
         try:
             # Do the real merge
             return self.merge_builder(self.builder_id.current_builder_id)
-        except Exception, e:
+        except Exception as e:
             _logger.error("Orbeon Runner merge Exception: %s" % e)
             raise UserError("Orbeon Runner merge Exception: %s" % e)
 

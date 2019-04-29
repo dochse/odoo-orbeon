@@ -2,7 +2,7 @@
 import base64
 from werkzeug.wrappers import Request, Response
 
-from orbeon_handlers import BuilderHandler, RunnerHandler, OdooServiceHandler
+from .orbeon_handlers import BuilderHandler, RunnerHandler, OdooServiceHandler
 from .. import utils
 from xml.etree import ElementTree as ET
 

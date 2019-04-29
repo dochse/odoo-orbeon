@@ -1,10 +1,10 @@
-import ConfigParser
+import configparser
 import dicttoxml
 
 from xml.dom.minidom import parseString
 
-from xmlrpc_service import XMLRPCService
-from xmlgen import XmlGenerator
+from .xmlrpc_service import XMLRPCService
+from .xmlgen import XmlGenerator
 from .. import utils
 
 _log = utils._log
@@ -170,8 +170,8 @@ class BuilderHandler(OrbeonHandlerBase):
             if len(form) > 0:
                 xml = XmlGenerator(form).gen_xml()
                 return xml
-        except Exception, e:
-            print "Exception: %s" % e
+        except Exception as e:
+            print ("Exception: %s" % e)
 
 
 class RunnerHandler(OrbeonHandlerBase):
@@ -292,5 +292,5 @@ class OdooServiceHandler(OrbeonHandlerBase):
             dom = parseString(xml)
             _log('debug', dom.toprettyxml())
             return xml
-        except Exception, e:
+        except Exception as e:
             _log('error', "Exception: %s" % e)
