@@ -284,8 +284,8 @@ class OrbeonServer(models.Model):
         for form_name in form_names:
             try:
                 url = "%s/fr/service/persistence/crud/orbeon/%s/form/form.xhtml" % (self.url, form_name)
-                request = urllib.Request(url)
-                result = urllib.urlopen(request)
+                request = urllib.request.Request(url)
+                result = urllib.request.urlopen(request)
                 data = result.read()
 
                 parser = etree.XMLParser(recover=True, encoding='utf-8')
