@@ -6,6 +6,9 @@ from .orbeon_handlers import BuilderHandler, RunnerHandler, OdooServiceHandler
 from .. import utils
 from xml.etree import ElementTree as ET
 
+import logging
+_logger = logging.getLogger(__name__)
+
 _log = utils._log
 
 BUILDER_HANDLER = 'builder_handler'
@@ -61,14 +64,14 @@ class OrbeonRequestHandler(object):
                 request.headers.get("Openerp-Server"),
                 request.headers.get("Openerp-Port"),
             )
+
             db = request.headers.get("Openerp-Database")
 
             # get authorization parameters
             b64str = request.headers.get("Authorization").replace("Basic ", "")
-            auth_str = base64.b64decode(b64str)
-            auth = auth_str.split(":")
-            usr, passwd = (auth[0], auth[1])
-
+            auth = b64str.split(":")
+            usr, passwd = (base64.b64decode(auth[0]), base64.b64decode(auth[1]))
+            _logger.error("%s,%s,%s" %(usr, passwd, url))
             self.handler.set_xmlrpc(db, usr, passwd, url)
 
     def set_path_attrs(self):
