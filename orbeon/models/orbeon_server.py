@@ -267,7 +267,6 @@ class OrbeonServer(models.Model):
                 thread.stopper.set()
                 _logger.info("Stopping HTTP (werkzeug) %s (thread: %s) on port %s", ORBEON_PERSISTENCE_SERVER_PREFIX, uuid, port)
                 thread.server.server_close()
-                thread.join()
 
     @api.multi
     def create_orbeon_builder_templates(self):
@@ -276,20 +275,20 @@ class OrbeonServer(models.Model):
 
         # XXX Once the listing (HTTP) request doesn't fail (HTTP 500),
         # this can be changed to a loop through all Orbeon example forms.
-        #
+       #
         # Accorrding to https://doc.orbeon.com/form-runner/api/persistence/forms-metadata.html
         # HTTP GET on: /fr/service/persistence/form
         form_names = ['contact', 'controls']
 
         for form_name in form_names:
             try:
-                url = "%s/fr/service/persistence/crud/orbeon/%s/form/form.xhtml" % (self.url, form_name)
+                url = "http://%s/fr/service/persistence/crud/orbeon/%s/form/form.xhtml" % (self.url, form_name)
                 request = urllib.request.Request(url)
                 result = urllib.request.urlopen(request)
                 data = result.read()
-
                 parser = etree.XMLParser(recover=True, encoding='utf-8')
                 xml_root = etree.XML(data, parser)
+
 
                 # TODO FIXME: multiple titles nodes (by language)
                 form_name = xml_root.xpath('//metadata/form-name')[0].text
