@@ -26,7 +26,7 @@ class OrbeonHandlerBase(object):
 
     def set_config_by_file_path(self, configfile_path):
         """Set config object by config_filename"""
-        config = ConfigParser.ConfigParser()
+        config = configparser.ConfigParser()
         config.read(configfile_path)
 
         if len(config.sections()) > 0:
