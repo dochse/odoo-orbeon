@@ -22,7 +22,7 @@ import logging
 
 from lxml import etree
 
-from . import xml_parser_erp_fields
+from .xml_parser_erp_fields import XmlParserERPFields
 
 _logger = logging.getLogger(__name__)
 

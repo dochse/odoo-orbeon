@@ -125,7 +125,7 @@ class OrbeonRequestHandler(object):
         if self.handler_type == BUILDER_HANDLER:
             self.handler = BuilderHandler(self.app, self.form, self.data_type, self.path, self.args, self.data.decode('utf-8'))
         elif self.handler_type == RUNNER_HANDLER:
-            self.handler = RunnerHandler(self.app, self.form, self.data_type, self.path, self.args, self.data)
+            self.handler = RunnerHandler(self.app, self.form, self.data_type, self.path, self.args, self.data.decode('utf-8', 'ignore'))
         elif self.handler_type == ODOO_SERVICE_HANDLER:
             self.handler = OdooServiceHandler(self.app, self.form, self.data_type, self.path, self.args, self.data)
         else:

@@ -25,10 +25,9 @@ from orbeon_xml_api.runner_copy_builder_merge import RunnerCopyBuilderMerge as R
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from ..services import runner_xml_parser
+from ..services.runner_xml_parser import runner_xml_parser
 
 import logging
-
 _logger = logging.getLogger(__name__)
 
 STATE_NEW = 'new'
