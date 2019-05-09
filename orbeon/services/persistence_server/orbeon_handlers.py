@@ -20,12 +20,18 @@
 ##############################################################################
 import configparser
 import dicttoxml
+import base64
+
 
 from xml.dom.minidom import parseString
 
 from .xmlrpc_service import XMLRPCService
 from .xmlgen import XmlGenerator
 from .. import utils
+
+import logging
+_logger = logging.getLogger(__name__)
+
 
 _log = utils._log
 
@@ -85,11 +91,10 @@ class OrbeonHandlerBase(object):
         )
 
         if len(res) > 0:
-            return res[0]['datas'].decode('base64')
+            return base64.b64decode(res[0]['datas'])
 
     def handle_binary_data(self):
         """Handle binray data"""
-
         """Currently data is stored in 'ir_attachment' (model)"""
         ira_data = {
             "res_id": self.form_doc_id,
@@ -97,7 +102,7 @@ class OrbeonHandlerBase(object):
             'name': self.form_data_id,
             'store_fname': self.form_data_id,
             'datas_fname': self.form_data_id,
-            "datas": self.data.encode('base64')
+            "datas": base64.b64encode(self.data)
         }
         self.xmlrpc.create(
             'ir.attachment',
@@ -147,7 +152,7 @@ class BuilderHandler(OrbeonHandlerBase):
             return
 
         if self.data_type == 'data' and self.form_data_id == 'data.xml':
-            data = {"xml": str(self.data)}
+            data = {"xml": self.data.decode('utf-8')}
 
             self.xmlrpc.write(
                 "orbeon.builder",
@@ -237,7 +242,7 @@ class RunnerHandler(OrbeonHandlerBase):
         """Write Orbeon-Runner data by save on edit (i.e. HTTP PUT)"""
 
         if self.data_type == 'data' and self.form_data_id == 'data.xml':
-            data = {"xml": str(self.data)}
+            data = {"xml": self.data.decode('utf-8')}
 
             self.xmlrpc.write(
                 "orbeon.runner",
